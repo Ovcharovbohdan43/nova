@@ -25,6 +25,7 @@ export async function GET() {
       checks,
       timestamp: new Date().toISOString(),
     },
-    { status: healthy ? 200 : 503 },
+    // Liveness: app is up even if DB is down (Railway healthcheck)
+    { status: 200 },
   );
 }

@@ -31,16 +31,18 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 WORKDIR /app
 
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/web/public ./apps/web/public
+COPY --from=builder /app/apps/web/.next/standalone ./
+COPY --from=builder /app/apps/web/.next/static ./apps/web/.next/static
+
+# Release command: prisma migrate deploy
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/package-lock.json ./
-COPY --from=builder /app/railway.toml ./
-COPY --from=builder /app/apps/web ./apps/web
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/packages/database ./packages/database
 
-WORKDIR /app
-EXPOSE 3000
-ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
+EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "apps/web/server.js"]
