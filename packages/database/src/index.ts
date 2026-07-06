@@ -1,6 +1,9 @@
 import { loadDatabaseEnv } from "./load-env";
 
-loadDatabaseEnv();
+// Railway/production injects DATABASE_URL; .env loading is for local dev only.
+if (process.env.NODE_ENV !== "production") {
+  loadDatabaseEnv();
+}
 
 import { PrismaClient } from "@prisma/client";
 

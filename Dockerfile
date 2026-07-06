@@ -1,12 +1,18 @@
-FROM node:22-alpine AS base
+FROM node:22-slim AS base
 WORKDIR /app
-RUN apk add --no-cache openssl libc6-compat
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openssl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 FROM base AS deps
 COPY package.json package-lock.json ./
 COPY apps/web/package.json ./apps/web/
 COPY packages/database/package.json ./packages/database/
-RUN npm ci
+RUN npm ci \
+    && npm install --no-save \
+        lightningcss-linux-x64-gnu@1.32.0 \
+        @tailwindcss/oxide-linux-x64-gnu@4.3.2 \
+        --workspace=web
 
 FROM base AS builder
 # Copy full deps tree (workspace bins live in apps/web/node_modules/.bin)
