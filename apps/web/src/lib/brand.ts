@@ -1,10 +1,16 @@
+function normalizeAppUrl(raw: string | undefined): string {
+  const value = raw?.trim() || "http://localhost:3000";
+  if (/^https?:\/\//i.test(value)) return value;
+  return `https://${value.replace(/^\/+/, "")}`;
+}
+
 export const brand = {
   name: "NOVA AI Studio",
   shortName: "NOVA",
   tagline: "Ship faster. Spend less.",
   description:
     "NOVA is a browser-based AI dev studio that automatically chooses the cheapest model that can handle your task — so you build more and waste nothing on tokens. Full repo workflow. BYOK-ready. Cost-aware AI for indie developers.",
-  url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+  url: normalizeAppUrl(process.env.NEXT_PUBLIC_APP_URL),
 } as const;
 
 export const pricingTiers = [
