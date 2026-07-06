@@ -1,0 +1,24 @@
+{
+  "name": "nova-ai-studio",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=web",
+    "build": "npm run db:generate && npm run build --workspace=web",
+    "start": "npm run start --workspace=web",
+    "lint": "npm run lint --workspace=web",
+    "typecheck": "npm run typecheck --workspace=web",
+    "db:generate": "npm run generate --workspace=@nova/database",
+    "db:migrate": "npm run migrate:deploy --workspace=@nova/database",
+    "db:push": "npm run push --workspace=@nova/database"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "overrides": {
+    "zod": "^3.25.76"
+  }
+}

@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+packages/database/prisma/*.db
+
+# Debug
+npm-debug.log*

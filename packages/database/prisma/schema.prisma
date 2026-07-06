@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model WaitlistEntry {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  intent       String?
+  source       String?
+  referralCode String?   @map("referral_code")
+  confirmedAt  DateTime? @map("confirmed_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@index([createdAt])
+  @@map("waitlist_entries")
+}

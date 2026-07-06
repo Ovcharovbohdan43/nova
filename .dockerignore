@@ -1,0 +1,11 @@
+node_modules
+.next
+.git
+.env
+.env.*
+!.env.example
+*.md
+!README.md
+.github
+apps/web/.next
+packages/database/prisma/*.db
